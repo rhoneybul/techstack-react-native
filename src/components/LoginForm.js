@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardSection, Input, Button } from "./common";
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
+import { Text } from 'react-native';
 
 class LoginForm extends Component {
     
@@ -13,6 +14,30 @@ class LoginForm extends Component {
         this.props.passwordChanged(text)
     }
     
+    onLoginUser() {
+        const { email, password } = this.props.auth;
+        console.log(email, password)
+        this.props.loginUser({ email, password })
+    }
+
+    renderError() {
+        if (this.props.auth.error) 
+            return (
+                <CardSection>
+                    <Text style={styles.errorText}>{this.props.auth.error}</Text>
+                </CardSection>
+            )
+    }
+
+    renderSuccessMessage() {
+        if (this.props.auth.authenticated) 
+            return (
+                <CardSection>
+                    <Text style={styles.successText}>{this.props.auth.user.email} logged in successfully.</Text>
+                </ CardSection>
+            )
+    }
+
     render() {
         const { email, password } = this.props;
         console.log(this.props);
@@ -35,14 +60,24 @@ class LoginForm extends Component {
                         placeholder="password"
                     />
                 </ CardSection>
-
+                { this.renderError() }
+                { this.renderSuccessMessage() }
                 <CardSection>
-                    <Button>
+                    <Button onPress={this.onLoginUser.bind(this)}>
                         Login
                     </Button>
                 </CardSection>
             </Card>
         );
+    }
+}
+
+const styles = {
+    errorText: {
+        color: 'red',
+    },
+    successText: {
+        color: 'green',
     }
 }
 

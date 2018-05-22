@@ -1,4 +1,7 @@
 import * as types from './types';
+import axios from 'axios';
+
+const API_URL = 'http://192.168.15.6:4000/api'
 
 export const emailChanged = (text) => {
     return {
@@ -13,3 +16,31 @@ export const passwordChanged = (text) => {
         payload: text
     };
 };
+
+export const loginUser = ({ email, password }) => {
+    return (dispatch) => {
+        axios.post(`${API_URL}/session`, { 
+            "email": email, 
+            "password": password,
+        })
+            .then(response => {
+                if ( response.status === 200 || response.status === 201 ) { 
+                    dispatch({ 
+                        type: types.LOGIN_USER_SUCCESS, 
+                        payload: response.data.data,
+                    })
+                } else { 
+                    dispatch({
+                        type: types.LOGIN_USER_FAILURE,
+                        payload: "Authentication Error"
+                    })
+                }
+            })
+            .catch(error => {
+                dispatch({
+                    type: types.LOGIN_USER_FAILURE,
+                    payload: "Authentication Error"
+                })
+            })
+    }
+}
