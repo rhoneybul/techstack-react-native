@@ -19,6 +19,7 @@ export const passwordChanged = (text) => {
 
 export const loginUser = ({ email, password }) => {
     return (dispatch) => {
+        dispatch({ type: types.BEGIN_LOADING })
         axios.post(`${API_URL}/session`, { 
             "email": email, 
             "password": password,
@@ -35,12 +36,14 @@ export const loginUser = ({ email, password }) => {
                         payload: "Authentication Error"
                     })
                 }
+                dispatch({ type: types.END_LOADING })
             })
             .catch(error => {
                 dispatch({
                     type: types.LOGIN_USER_FAILURE,
                     payload: "Authentication Error"
                 })
+                dispatch({ type: types.END_LOADING })
             })
     }
 }

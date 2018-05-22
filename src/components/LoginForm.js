@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardSection, Input, Button } from "./common";
+import { Card, CardSection, Input, Button, Spinner } from "./common";
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import { Text } from 'react-native';
@@ -38,6 +38,15 @@ class LoginForm extends Component {
             )
     }
 
+    renderLoadingWheel() {
+        if (this.props.auth.loading)
+            return (
+                <CardSection>
+                    <Spinner size={"small"} />
+                </ CardSection>
+            )
+    }
+
     render() {
         const { email, password } = this.props;
         console.log(this.props);
@@ -62,6 +71,7 @@ class LoginForm extends Component {
                 </ CardSection>
                 { this.renderError() }
                 { this.renderSuccessMessage() }
+                { this.renderLoadingWheel() }
                 <CardSection>
                     <Button onPress={this.onLoginUser.bind(this)}>
                         Login
