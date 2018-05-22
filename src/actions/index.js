@@ -1,5 +1,6 @@
 import * as types from './types';
 import axios from 'axios';
+import { Actions } from 'react-native-router-flux';
 
 const API_URL = 'http://192.168.15.6:4000/api'
 
@@ -30,6 +31,7 @@ export const loginUser = ({ email, password }) => {
                         type: types.LOGIN_USER_SUCCESS, 
                         payload: response.data.data,
                     })
+                    Actions.employeeList();
                 } else { 
                     dispatch({
                         type: types.LOGIN_USER_FAILURE,
