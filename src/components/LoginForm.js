@@ -14,8 +14,8 @@ class LoginForm extends Component {
     }
     
     render() {
-        const { email, password } = this.props.auth;
-        console.log('email', email, 'password', password)
+        const { email, password } = this.props;
+        console.log(this.props);
         return (
             <Card>
                 <CardSection>
