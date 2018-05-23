@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import { Card, CardSection, Input, Button, Spinner } from "./common";
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import * as actions from '../actions/index';
 import { Text } from 'react-native';
 
 class LoginForm extends Component {
+
+    
+    componentDidMount () {
+        Actions.main();
+    }
+    
     
     onEmailChange(text) {
         this.props.emailChanged(text)

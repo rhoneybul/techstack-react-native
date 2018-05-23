@@ -31,7 +31,7 @@ export const loginUser = ({ email, password }) => {
                         type: types.LOGIN_USER_SUCCESS, 
                         payload: response.data.data,
                     })
-                    Actions.employeeList();
+                    Actions.main();
                 } else { 
                     dispatch({
                         type: types.LOGIN_USER_FAILURE,
